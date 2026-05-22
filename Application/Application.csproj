@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+   
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+
+   
+
+  <ItemGroup>
+    <ProjectReference Include="..\InfraStructure\InfraStructure.csproj" />
+  </ItemGroup>
+
+   
+
+  <ItemGroup>
+    <Folder Include="Features\Projects\Commands\Handlers\" />
+    <Folder Include="Features\Projects\Queries\Handlers\" />
+    <Folder Include="Features\Projects\Queries\Models\" />
+    <Folder Include="Features\Tasks\Commands\Handlers\" />
+    <Folder Include="Features\Tasks\Commands\Models\" />
+    <Folder Include="Features\Tasks\Queries\Handlers\" />
+    <Folder Include="Features\Tasks\Queries\Models\" />
+  </ItemGroup>
+
+</Project>
