@@ -137,7 +137,7 @@ Solution/
 ### 1. Clone the Repository
 
 ```bash
-git https://github.com/AhmedAlaa123/Projects_And_Tasks_Managment.git
+git clone https://github.com/AhmedAlaa123/Projects_And_Tasks_Managment.git
 cd task-project-management
 ```
 
@@ -258,32 +258,33 @@ Set multiple startup projects:
 
 ## API Endpoints
 
-### Auth
+### Authentication
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/v1/Auth/register` | Register new user |
-| POST | `/api/v1/Auth/login` | Login and get JWT token |
+| POST | `/api/v1/Auth/Login` | Login and get JWT token |
+| POST | `/api/v1/Auth/Create` | Register new user |
+| GET  | `/api/v1/Auth/Roles` | Get all roles |
 
 ### Projects
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/Project` | Get all projects (paginated) |
-| GET | `/api/v1/Project/{id}` | Get project by ID |
-| POST | `/api/v1/Project` | Create new project |
-| PUT | `/api/v1/Project/{id}` | Update project |
-| DELETE | `/api/v1/Project/{id}` | Delete project |
+| GET    | `/api/v1/Projects/GetAll?PageNumber=1&PageSize=10` | Get all projects (paginated) |
+| GET    | `/api/v1/Projects/Get/{id}` | Get project by ID |
+| GET    | `/api/v1/Projects/get-tasks?id={id}` | Get tasks by project ID |
+| POST   | `/api/v1/Projects/Create` | Create new project |
+| PUT    | `/api/v1/Projects/Update` | Update project |
+| DELETE | `/api/v1/Projects/delete/{id}` | Delete project |
 
 ### Tasks
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/v1/Task` | Get all tasks by project |
-| POST | `/api/v1/Task` | Create new task |
-| PUT | `/api/v1/Task/{id}` | Update task |
-| PUT | `/api/v1/Task/{id}/Status` | Update task status |
-| DELETE | `/api/v1/Task/{id}` | Delete task |
+| POST   | `/api/v1/Task/Create` | Create new task |
+| PUT    | `/api/v1/Task/Update` | Update task |
+| PUT    | `/api/v1/Task/Update-Status` | Update task status |
+| DELETE | `/api/v1/Task/Delete/{id}` | Delete task |
 
 ---
 
