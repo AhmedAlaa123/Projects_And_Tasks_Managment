@@ -3,25 +3,22 @@
    
 
   <ItemGroup>
+    <None Include="Features\Users\Commands\Models\RegisterUserDto.cs" />
+  </ItemGroup>
+
+   
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="FluentValidation.AspNetCore" />
     <PackageReference Include="MediatR" />
+    <PackageReference Include="StackExchange.Redis" />
   </ItemGroup>
 
    
 
   <ItemGroup>
     <ProjectReference Include="..\InfraStructure\InfraStructure.csproj" />
-  </ItemGroup>
-
-   
-
-  <ItemGroup>
-    <Folder Include="Features\Projects\Commands\Handlers\" />
-    <Folder Include="Features\Projects\Queries\Handlers\" />
-    <Folder Include="Features\Projects\Queries\Models\" />
-    <Folder Include="Features\Tasks\Commands\Handlers\" />
-    <Folder Include="Features\Tasks\Commands\Models\" />
-    <Folder Include="Features\Tasks\Queries\Handlers\" />
-    <Folder Include="Features\Tasks\Queries\Models\" />
   </ItemGroup>
 
 </Project>

@@ -13,14 +13,16 @@ public class AuthService
 
     public AuthService(IOptions<JwtSettings> jwtOptions)=> _jwtSettings = jwtOptions.Value;
     
-    public string GenerateToken(string username,string role)
+    public string GenerateToken(string username,string role,int Userid)
     {
       
         var claims = new[]
         {
         new Claim(JwtRegisteredClaimNames.Sub, username),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim(ClaimTypes.Role, role)
+        new Claim(ClaimTypes.Role, role),
+        new Claim("UserId", Userid.ToString()),
+        
     };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
@@ -31,7 +33,8 @@ public class AuthService
             audience: _jwtSettings.Audience,
             claims: claims,
             expires: DateTime.Now.AddHours(1),
-            signingCredentials: creds);
+            signingCredentials: creds
+      );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }

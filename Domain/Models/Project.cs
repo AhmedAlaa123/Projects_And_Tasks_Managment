@@ -5,7 +5,7 @@ public class Project
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public int CreatedBy { get; set; }
+    public int? CreatedBy { get; set; }
     public virtual ICollection<Task>?AssignedTasks {  get; set; }
-    public virtual ApplicationUser CreatorUser { get; set; } = null!;
+    public virtual ApplicationUser? CreatorUser { get; set; }
 }

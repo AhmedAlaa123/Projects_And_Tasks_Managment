@@ -1,10 +1,12 @@
-﻿using Application.Contracts;
-using InfraStructure.context;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Contracts;
+using Application.Exceptions;
+using InfraStructure.context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Reposatories;
 
@@ -37,10 +39,20 @@ public class Reposatory<T> : IReposatory<T> where T : class
         return data;
     }
 
+    public T GetById<Td>(Td id)
+    {
+        var entity = _dbContext.Set<T>().Find(id);
+        return entity ?? throw new NotFoundException($"{typeof(T).Name} with id {id} not found");
+    }
+
     public async Task<T> Update(T item)
     {
        _dbContext.Set<T>().Update(item);
        await _dbContext.SaveChangesAsync();
         return item;
+    }
+    public async Task<int> TotalCount()
+    {
+      return await _dbContext.Set<T>().CountAsync();
     }
 }

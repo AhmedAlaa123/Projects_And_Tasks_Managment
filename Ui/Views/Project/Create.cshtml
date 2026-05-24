@@ -1,0 +1,57 @@
+﻿@using Ui.Services.Dtos
+@model CreateProjectDto
+@{
+    ViewData["Title"] = "Create Project";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <a asp-action="Index" class="btn btn-sm btn-outline-secondary">
+                           Back
+                        </a>
+                        <h5 class="fw-semibold mb-0">Create Project</h5>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <form asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label small fw-semibold"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter project name" />
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Description" class="form-label small fw-semibold"></label>
+                            <textarea asp-for="Description" class="form-control" rows="4"
+                                      placeholder="Enter project description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-plus-lg me-1"></i> Create
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

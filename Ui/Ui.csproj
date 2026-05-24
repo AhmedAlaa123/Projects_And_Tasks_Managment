@@ -1,15 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
  
-  <PropertyGroup>
-    <UserSecretsId>e7c9357c-91df-452f-a6d1-bd936f69541d</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-  </PropertyGroup>
+ 
 
  
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
+
+  </ItemGroup>
+
+ 
+ 
+
+ 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

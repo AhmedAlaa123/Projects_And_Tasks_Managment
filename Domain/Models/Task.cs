@@ -10,7 +10,7 @@ public class Task
     public DateTime DueDate { get; set; }
     public TaskPriority Priority { get; set; }
     public int ProjectId { get; set; }
-    public int CreatedBy { get; set; }
+    public int? CreatedBy { get; set; }
     public virtual Project Project { get; set; } = null!;
-    public virtual ApplicationUser CreatorUser { get; set; } = null!;
+    public virtual ApplicationUser? CreatorUser { get; set; } 
 }

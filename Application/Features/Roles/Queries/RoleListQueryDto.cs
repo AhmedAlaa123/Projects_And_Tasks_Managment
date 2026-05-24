@@ -5,10 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Roles.Queries
+namespace Application.Features.Roles.Queries;
+public class RoleListQueryDto:IRequest<List<RoleDto>>
 {
-    public class RoleListQueryDto:IRequest<List<RoleDto>>
-    {
 
-    }
 }

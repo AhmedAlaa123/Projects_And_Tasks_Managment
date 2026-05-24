@@ -7,35 +7,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Roles.Queries
+namespace Application.Features.Roles.Queries;
+
+public class RoleQueryHandler : IRequestHandler<RoleQueryDto, RoleDto>, IRequestHandler<RoleListQueryDto, List<RoleDto>>
 {
-    public class RoleQueryHandler : IRequestHandler<RoleQueryDto, RoleDto>, IRequestHandler<RoleListQueryDto, List<RoleDto>>
+    private readonly RoleManager<IdentityRole<int>> _roleManger;
+
+    public RoleQueryHandler(RoleManager<IdentityRole<int>> roleManger)=> _roleManger = roleManger;
+
+
+    public async Task<List<RoleDto>> Handle(RoleListQueryDto request, CancellationToken cancellationToken)
     {
-        private readonly RoleManager<IdentityRole<int>> _roleManger;
+       var roles=await _roleManger.Roles.Select(ele=>new RoleDto { Id=ele.Id,RoleName=ele.Name}).ToListAsync();
+        return roles;
+    }
 
-        public RoleQueryHandler(RoleManager<IdentityRole<int>> roleManger)
+    public async Task<RoleDto> Handle(RoleQueryDto request, CancellationToken cancellationToken)
+    {
+        var roles = await _roleManger.Roles.FirstOrDefaultAsync(ele=>ele.Name==request.RoleName);
+        if (roles == null)
         {
-            _roleManger = roleManger;
+            return null;
         }
-
-        public async Task<List<RoleDto>> Handle(RoleListQueryDto request, CancellationToken cancellationToken)
+        return new RoleDto
         {
-           var roles=await _roleManger.Roles.Select(ele=>new RoleDto { Id=ele.Id,RoleName=ele.Name}).ToListAsync();
-            return roles;
-        }
-
-        public async Task<RoleDto> Handle(RoleQueryDto request, CancellationToken cancellationToken)
-        {
-            var roles = await _roleManger.Roles.FirstOrDefaultAsync(ele=>ele.Name==request.RoleName);
-            if (roles == null)
-            {
-                return null;
-            }
-            return new RoleDto
-            {
-                Id = roles.Id,
-                RoleName = roles.Name
-            };
-        }
+            Id = roles.Id,
+            RoleName = roles.Name
+        };
     }
 }

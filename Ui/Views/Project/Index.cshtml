@@ -1,0 +1,148 @@
+﻿@using Ui.Services.Dtos
+@model PagedResult<ProjectDto>
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-semibold mb-0">
+            Projects
+            <span class="badge bg-secondary ms-2">@Model.TotalCount</span>
+        </h4>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> New Project
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Created At</th>
+                        <th>Created By</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Items.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                No projects found
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var project in Model.Items)
+                        {
+                            <tr>
+                                <td>@project.Id</td>
+                                <td>@project.Name</td>
+                                <td>@project.Description</td>
+                                <td>@project.CreatedAt.ToString("MMM dd, yyyy")</td>
+                                <td>@project.CreatedPreson</td>
+                                <td class="text-center">
+                                    <a asp-controller="Task" asp-action="Index"
+                                       asp-route-projectId="@project.Id"
+                                       class="btn btn-sm btn-outline-primary me-1" title="View Tasks">
+                                       Tasks
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@project.Id"
+                                       class="btn btn-sm btn-outline-info me-1" title="Details">
+                                        View
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@project.Id"
+                                       class="btn btn-sm btn-outline-warning">
+                                         Edit
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@project.Id"
+                                          method="post" class="d-inline"
+                                          onsubmit="return confirm('Are you sure?')">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="card-footer d-flex justify-content-between align-items-center">
+            <small class="text-muted">
+                Showing @((Model.PageNumber - 1) * Model.PageSize + 1)
+                to @(Math.Min(Model.PageNumber * Model.PageSize, Model.TotalCount))
+                of @Model.TotalCount results
+            </small>
+
+            <nav>
+                <ul class="pagination pagination-sm mb-0">
+
+                 
+                    <li class="page-item @(!Model.HasPrevious ? "disabled" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-pageNumber="@(Model.PageNumber - 1)"
+                           asp-route-pageSize="@Model.PageSize">
+                            &laquo;
+                        </a>
+                    </li>
+
+                    @* Pages *@
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                            <a class="page-link"
+                               asp-action="Index"
+                               asp-route-pageNumber="@i"
+                               asp-route-pageSize="@Model.PageSize">
+                                @i
+                            </a>
+                        </li>
+                    }
+
+                    @* Next *@
+                    <li class="page-item @(!Model.HasNext ? "disabled" : "")">
+                        <a class="page-link"
+                           asp-action="Index"
+                           asp-route-pageNumber="@(Model.PageNumber + 1)"
+                           asp-route-pageSize="@Model.PageSize">
+                            &raquo;
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+
+            @* Page Size Selector *@
+            <div class="d-flex align-items-center gap-2">
+                <small class="text-muted">Rows per page:</small>
+                <select class="form-select form-select-sm" style="width:70px"
+                        onchange="window.location.href='/project/index?pageNumber=1&pageSize=' + this.value">
+                    <option value="5" selected="@(Model.PageSize == 5)">5</option>
+                    <option value="10" selected="@(Model.PageSize == 10)">10</option>
+                    <option value="25" selected="@(Model.PageSize == 25)">25</option>
+                    <option value="50" selected="@(Model.PageSize == 50)">50</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
